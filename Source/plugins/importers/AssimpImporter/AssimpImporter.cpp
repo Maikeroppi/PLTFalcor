@@ -47,6 +47,26 @@
 #include <execution>
 #include <fstream>
 
+#include <fmt/format.h>
+
+template<> struct fmt::formatter<aiLightSourceType> : fmt::formatter<string_view>
+{
+    auto fmt::formatter<aiLightSourceType>::format(aiLightSourceType type, format_context& ctx) const -> format_context::iterator
+    {
+        string_view name = "";
+        switch (type)
+        {
+        case aiLightSource_DIRECTIONAL: name = "directional"; break;
+        case aiLightSource_POINT:       name = "point"; break;
+        case aiLightSource_SPOT:        name = "spot"; break;
+        case aiLightSource_AMBIENT:     name = "ambient"; break;
+        case aiLightSource_AREA:        name = "area"; break;
+        default:                        name = "undefined"; break;
+        }
+        return formatter<string_view>::format(name, ctx);
+    }
+};
+
 namespace Falcor
 {
 

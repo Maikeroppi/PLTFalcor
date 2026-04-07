@@ -44,6 +44,16 @@ struct formatter<std::filesystem::path> : formatter<std::string>
 };
 
 template<typename T>
+struct formatter<std::atomic<T>> : formatter<T>
+{
+    template<typename FormatContext>
+    auto format(const std::atomic<T>& value, FormatContext& ctx)
+    {
+        return formatter<T>::format(value.load(), ctx);
+    }
+};
+
+template<typename T>
 struct formatter<std::optional<T>> : fmt::formatter<T>
 {
     template<typename FormatContext>
