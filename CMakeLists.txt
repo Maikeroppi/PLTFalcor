@@ -457,5 +457,8 @@ if(plugin_targets)
     add_dependencies(FalcorPython ${plugin_targets})
 endif()
 
+# Make Mogwai depend on Falcor / FalcorPython
+add_dependencies(Mogwai Falcor FalcorPython)
+
 # Make Mogwai the default startup project in VS.
 set_property(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY VS_STARTUP_PROJECT Mogwai)
