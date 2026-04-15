@@ -127,7 +127,12 @@ void PluginManager::loadAllPlugins()
     CpuTimer timer;
     timer.update();
 
-    std::ifstream ifs(getRuntimeDirectory() / "plugins" / "plugins.json");
+    const std::filesystem::path& runtimeDir = getRuntimeDirectory();
+    std::filesystem::path pluginJsonFile = runtimeDir / "plugins" / "plugins.json";
+    py::print("Running in directory {}", runtimeDir.c_str());
+    py::print("Loading plugin file {}", pluginJsonFile.c_str());
+
+    std::ifstream ifs(pluginJsonFile);
     auto json = nlohmann::json::parse(ifs);
     size_t loadedCount = 0;
     for (const auto& name : json)

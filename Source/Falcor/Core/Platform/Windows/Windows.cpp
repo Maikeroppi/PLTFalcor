@@ -400,7 +400,13 @@ const std::filesystem::path& getRuntimeDirectory()
             {
                 throw RuntimeError("Failed to get the falcor directory. GetModuleFileNameA failed, error = {}.", GetLastError());
             }
-            return std::filesystem::path(pathStr).parent_path();
+            // A hack to get it to return the correct runtime directory when FalcorPython is running
+            std::filesystem::path returnPath = std::filesystem::path(pathStr).parent_path();
+            if (returnPath.filename() == "python")
+            {
+                returnPath = returnPath.parent_path();
+            }
+            return returnPath;
         }()
     );
     return path;

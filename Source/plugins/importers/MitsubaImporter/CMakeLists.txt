@@ -7,7 +7,6 @@ target_sources(MitsubaImporter PRIVATE
     Resolver.h
     Loader.h
     Tables.h
-    xml.cpp
 )
 
 target_include_directories(MitsubaImporter PRIVATE ../../../../external/mitsuba)
