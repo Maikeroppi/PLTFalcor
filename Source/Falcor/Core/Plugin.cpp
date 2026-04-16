@@ -129,8 +129,8 @@ void PluginManager::loadAllPlugins()
 
     const std::filesystem::path& runtimeDir = getRuntimeDirectory();
     std::filesystem::path pluginJsonFile = runtimeDir / "plugins" / "plugins.json";
-    py::print("Running in directory {}", runtimeDir.c_str());
-    py::print("Loading plugin file {}", pluginJsonFile.c_str());
+    logInfo("Running in directory {}", runtimeDir);
+    logInfo("Loading plugin file {}", pluginJsonFile);
 
     std::ifstream ifs(pluginJsonFile);
     auto json = nlohmann::json::parse(ifs);

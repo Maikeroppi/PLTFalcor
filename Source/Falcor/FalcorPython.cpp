@@ -27,6 +27,7 @@
  **************************************************************************/
 #include "Core/API/Device.h"
 #include "Core/Plugin.h"
+#include "Utils/Logger.h"
 #include "Utils/Scripting/ScriptBindings.h"
 
 #include <pybind11/pybind11.h>
@@ -51,12 +52,16 @@ static bool isLoadedFromEmbeddedPython()
 
 PYBIND11_MODULE(falcor, m)
 {
+    Falcor::logInfo("Loaded Falcor Module");
+
     if (!isLoadedFromEmbeddedPython())
     {
+        Falcor::logInfo("Not embedded; manually enabling AbilitySDK and loading plugins...");
         Falcor::Device::enableAgilitySDK();
         Falcor::PluginManager::instance().loadAllPlugins();
     }
 
+    Falcor::logInfo("Initializing module");
     m.doc() = "Falcor python bindings";
     Falcor::ScriptBindings::initModule(m);
 }
